@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "DropDown";
+}
+@using aspNetWADropDown.ViewModels
+@model viewInventoryViewModel
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>
+    @Html.DropDownListFor( d => d.selectedDepartment, new SelectList (ViewBag.Departments,"Value", "Text", "Selected"),
+        new {
+            onchange = "document.location.href = '/Home/DropDownBoxWA?dept=' + this.options[this.selectedIndex].value;"
+        }
+    )
+
+</p>

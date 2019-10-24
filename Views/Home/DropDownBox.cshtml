@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "DropDown";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>
+    @Html.DropDownList("Departments", new List<SelectListItem>
+     {
+        new SelectListItem{ Text = "IT", Value= "1"},
+        new SelectListItem{ Text = "HR", Value="2", Selected = true},
+        new SelectListItem{ Text = "Sales", Value="3"}
+     }, "SelectDepartment")
+</p>
