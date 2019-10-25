@@ -59,10 +59,12 @@ new { @class = "form-control", id = "Unit" }
                 var unitsSelect = $('#Unit');
                 $.ajax({
                     type: "GET",
-                    url: '@Url.Action("ShowPartial")',
+                    url: '@Url.Action("ShowPartial")' + '?dept='+unitsSelect.val(),
                     data: { dept: unitsSelect.val() },
                     success: function (data) {
                         console.log('success');
+                        $("#PartialView").html(data);
+                        console.log(data);
                     },
                     error: function () {
                         console.log('error');
