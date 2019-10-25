@@ -8,10 +8,17 @@
 <h3>@ViewBag.Message</h3>
 
 <p>
-    @Html.DropDownListFor( d => d.selectedDepartment, new SelectList (ViewBag.Departments,"Value", "Text", "Selected"),
-        new {
+    @Html.DropDownListFor(d => d.selectedDepartment, new SelectList(ViewBag.Departments, "Value", "Text", "Selected"),
+        new
+            {
             onchange = "document.location.href = '/Home/DropDownBoxWA?dept=' + this.options[this.selectedIndex].value;"
         }
     )
 
+    @Html.DropDownListFor(d => d.selectedUnit, new SelectList(ViewBag.Units, "Value", "Text", "Selected"),
+    new
+         {
+        onchange = "document.location.href = '/Home/DropDownBoxWA?unit=' + this.options[this.selectedIndex].value;"
+    }
+)
 </p>

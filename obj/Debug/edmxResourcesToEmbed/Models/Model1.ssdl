@@ -10,6 +10,17 @@ warning 6002: The table/view 'vozik.dbo.Departments' does not have a primary key
     <Property Name="Label" Type="nchar" MaxLength="20" />
     <Property Name="Code" Type="nchar" MaxLength="10" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'vozik.dbo.Units' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Label" Type="nchar" MaxLength="20" />
+    <Property Name="Code" Type="nchar" MaxLength="10" />
+    <Property Name="DepartmentId" Type="int" />
+  </EntityType>
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="Departments" EntityType="Self.Departments" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -17,6 +28,14 @@ warning 6002: The table/view 'vozik.dbo.Departments' does not have a primary key
     [Departments].[Label] AS [Label], 
     [Departments].[Code] AS [Code]
     FROM [dbo].[Departments] AS [Departments]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Units" EntityType="Self.Units" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Units].[id] AS [id], 
+    [Units].[Label] AS [Label], 
+    [Units].[Code] AS [Code], 
+    [Units].[DepartmentId] AS [DepartmentId]
+    FROM [dbo].[Units] AS [Units]</DefiningQuery>
     </EntitySet>
   </EntityContainer>
 </Schema>

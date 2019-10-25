@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "MVVM";
+}
+@using aspNetWADropDown.ViewModels
+@model viewInventoryViewModel
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.DropDownListFor(d => d.selectedDepartment, new SelectList(ViewBag.Departments, "Value", "Text", "Selected"),
+new { @class = "form-control", id = "Department" }
+)
+    </div>
+    <div class="form-group">
+        @Html.DropDownListFor(d => d.selectedUnit, new SelectList(ViewBag.Units, "Value", "Text", "Selected"),
+new { @class = "form-control", id = "Unit" }
+)
+    </div>
+    <div class="form-group">
+        @Html.DisplayFor(d => d.selectedDepartment)
+        @Html.DisplayFor(d => d.selectedUnit)
+    </div>
+    <div>
+        @{Html.RenderPartial("_PartialSmallPage", Model);}
+    </div>
+    <div id="PartialView">
+        @{ Html.RenderAction("ShowPartial", Model);}
+    </div>
+    
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript">
+            $('#Department').change(function () {
+                var selectedDepartment = $("#Department").val();
+                var unitsSelect = $('#Unit');
+                unitsSelect.empty();
+                if (selectedDepartment != null && selectedDepartment != '') {
+                    $.getJSON('@Url.Action("GetUnits")', { dept: selectedDepartment }, function (units) {
+                        if (units != null && !jQuery.isEmptyObject(units))
+                        {
+                            unitsSelect.append($('<option/>', {
+                                value: null,
+                                text: "-- select --"
+                            }));
+                            $.each(units, function (index, unit) {
+                                unitsSelect.append($('<option/>', {
+                                    value: unit.Value,
+                                    text: unit.Text
+                                }));
+                            });
+                        };
+                    });
+                }
+            });
+            $('#Unit').change(function () {
+                var unitsSelect = $('#Unit');
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("ShowPartial")',
+                    data: { dept: unitsSelect.val() },
+                    success: function (data) {
+                        console.log('success');
+                    },
+                    error: function () {
+                        console.log('error');
+                    },
+                });
+                console.log('fired');
+            });
+        </script>
+    }
+}
